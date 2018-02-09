@@ -20,17 +20,18 @@ switch (process.env.NODE_ENV){
 }
 
 module.exports = {
+    // entry: path.resolve(__dirname, 'app/index.js'),
     entry: {
-        main: path.join(__dirname, 'app/index.js'),
+        main: path.resolve(__dirname, 'app/index.js'),
         underscore: ['underscore']
     },
     output: {
-        path: path.join(__dirname, '/dist'),
-        filename: '[name]-[hash].js'
+        path: path.resolve(__dirname, './dist'),
+        filename: '[name].[hash:8].js'
     },
     devtool: sourceMapType,
     devServer: {
-        contentBase: path.join(__dirname, './dist'), //本地服务器所加载的页面所在的目录
+        contentBase: path.resolve(__dirname, './public'), //本地服务器所加载的页面所在的目录
         historyApiFallback: true, //不跳转
         inline: true, //实时刷新
         hot: true,
@@ -46,16 +47,21 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /(\.css|\.scss$)/,
-                use: [{
-                    loader: 'style-loader'
-                },{
-                    loader: 'css-loader',
-                    options: {
-                        modules: true, // 指定启用css modules
-                        localIdentName: '[name]__[local]--[hash:base64:5]' // 指定css的类名格式
-                    }
-                }]
+                test: /(\.css|\.scss|\.less$)/,
+                exclude: /(node_modules|bower_components)/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader']
+                }),
+                // use: [{
+                //     loader: 'style-loader'
+                // },{
+                //     loader: 'css-loader',
+                //     options: {
+                //         modules: true, // 指定启用css modules
+                //         localIdentName: '[name]-[hash:base64:5]' // 指定css的类名格式
+                //     }
+                // }]
             }
         ]
     },
@@ -65,9 +71,9 @@ module.exports = {
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.optimize.UglifyJsPlugin(),
 
-        new ExtractTextPlugin(path.join(__dirname, './dist/main.css')),
+        new ExtractTextPlugin('./[name].[chunkhash:8].css'),
         new HtmlWebpackPlugin({
-            template: path.join(__dirname, '/app/index.tmpl.html')
+            template: path.resolve(__dirname, './app/index.tmpl.html')
         }),
         new CleanWebpackPlugin('dist/*.*', {
             root: __dirname,

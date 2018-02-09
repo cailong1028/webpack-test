@@ -16,7 +16,7 @@ import GreeterStyle from '../style/Greeter.css';
 class Greeter extends Component{
     render() {
         return (
-            <div className={GreeterStyle.root}>
+            <div className={GreeterStyle.greeting}>
                 <h1>red color</h1>
                 {greetingConf.greetText}
             </div>
