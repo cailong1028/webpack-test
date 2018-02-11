@@ -9,14 +9,20 @@
 
 //use babel
 import React, {Component} from 'react';
-import greetingConf from '../conf/greeting';
+import greetingConf from '../../conf/greeting';
 
-import GreeterStyle from '../style/Greeter.css';
-import sassTest from '../style/sass-test.scss';
-import lessTest from '../style/less-test.less';
+import GreeterStyle from '../../style/Greeter.css';
+import sassTest from '../../style/sass-test.scss';
+import lessTest from '../../style/less-test.less';
 
 class Greeter extends Component{
+
     render() {
+
+        // alert(ctx);
+        _.each([1,2], (one) => {
+            console.log(one);
+        });
         return (
             <div className={GreeterStyle.greeting}>
                 <h1>hi colors</h1>
@@ -28,7 +34,6 @@ class Greeter extends Component{
                 <p>
                     <i className={lessTest["less-test2"]}>less test</i>
                 </p>
-
 
             </div>
         );

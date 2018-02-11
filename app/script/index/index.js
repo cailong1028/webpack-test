@@ -6,8 +6,8 @@
 //use babel
 import React from 'react';
 import {render} from 'react-dom';
-import Greeter from './script/Greeter';
+import Greeter from '../test/Greeter';
 
-import './style/main.css';
+import '../../style/main.css';
 
-render(<Greeter />, document.getElementById('root'));
+render(<Greeter></Greeter>, document.getElementById('root'));
